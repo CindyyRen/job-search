@@ -14,7 +14,7 @@ const OtherPagesNavbar = () => {
   return (
     <nav className="flex items-center p-4">
       <Link href="/">
-        <span className="relative text-white ml-20 font-bold w-12 h-12 bg-orange-400 rounded-full flex justify-center items-center text-center p-5 shadow-xl">
+        <span className="relative text-white ml-20 font-bold w-12 h-12 bg-[var(--accent-9)] rounded-full flex justify-center items-center text-center p-5 shadow-xl">
           <span className="absolute text-sm font-bold right-[50px] top-[15px] text-slate-500">
             Academic
           </span>
@@ -30,9 +30,13 @@ const OtherPagesNavbar = () => {
           <Link
             key={item.route}
             href={item.route}
-            className={`text-gray-900 hover:text-gray-700 hover:no-underline hover:underline-on-active p-4 hidden sm:block`}
+            className={`text-gray-900  p-4 hidden sm:block`}
           >
-            <p className={`${isActive ? 'active-link' : 'text-gray-500'} `}>
+            <p
+              className={`hover:'text-gray-700  bg-slate-50 rounded' ${
+                isActive ? '' : 'text-gray-500'
+              } `}
+            >
               {item.label}
             </p>
           </Link>
@@ -64,3 +68,5 @@ const OtherPagesNavbar = () => {
 };
 
 export default OtherPagesNavbar;
+
+// hover:no-underline hover:underline-on-active

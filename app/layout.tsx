@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
+import { Container, Theme, ThemePanel } from '@radix-ui/themes';
+import '@radix-ui/themes/styles.css';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -31,7 +33,14 @@ export default function RootLayout({
         className={`${inter.variable} ${spaceGrotesk.variable}`}
         suppressHydrationWarning={true}
       >
-        <ClerkProvider>{children}</ClerkProvider>
+        <Container>
+          {/* <Theme> */}
+          <Theme accentColor="orange">
+            {/* <Theme accentColor="blue"> */}
+            <ClerkProvider>{children}</ClerkProvider>
+            {/* <ThemePanel /> */}
+          </Theme>
+        </Container>
       </body>
     </html>
   );
