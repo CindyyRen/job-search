@@ -16,6 +16,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 type Inputs = {
   location: string;
   LocationCheckbox: string[];
+  selectedOption: string | null;
 };
 
 const Model = () => {
@@ -85,6 +86,41 @@ const Model = () => {
                             checked={field.value.includes(option.label)}
                           />
                           <label className="inline-flex items-center outline-none pl-2 ">
+                            {option.label}
+                          </label>
+                        </div>
+                      ))}
+                    </>
+                  )}
+                />
+              </label>
+            </fieldset>
+            <hr className="border-gray-200 my-4"></hr>
+            <fieldset>
+              <legend className="pb-2 font-bold">Time Posted</legend>
+              <label className="grid grid-cols-2 gap-4  pb-2">
+                <Controller
+                  name="selectedOption"
+                  control={control}
+                  defaultValue="Any time"
+                  render={({ field }) => (
+                    <>
+                      {DatePosted.map((option, index) => (
+                        <div key={index}>
+                          <input
+                            type="radio"
+                            id={option.label}
+                            value={option.label}
+                            className="text-gray-600 focus:ring-0"
+                            onChange={(e) => {
+                              field.onChange(e.target.value);
+                            }}
+                            checked={field.value === option.label}
+                          />
+                          <label
+                            className="inline-flex items-center outline-none pl-2 "
+                            htmlFor={option.label}
+                          >
                             {option.label}
                           </label>
                         </div>
