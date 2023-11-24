@@ -5,9 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { usePathname } from 'next/navigation';
-// import Theme from './Theme';
-// import MobileNav from './MobileNav';
-// import GlobalSearch from '../search/GlobalSearch';
+import { Tabs } from '@radix-ui/themes';
 
 const OtherPagesNavbar = () => {
   const pathname = usePathname();
@@ -22,7 +20,7 @@ const OtherPagesNavbar = () => {
         </span>
       </Link>
 
-      {NavbarLinks.map((item) => {
+      {/* {NavbarLinks.map((item) => {
         const isActive =
           (pathname.includes(item.route) && item.route.length > 1) ||
           pathname === item.route;
@@ -41,8 +39,18 @@ const OtherPagesNavbar = () => {
             </p>
           </Link>
         );
-      })}
-
+      })} */}
+      <Tabs.Root defaultValue="account" className="max-sm:hidden">
+        <Tabs.List size="2">
+          {NavbarLinks.map((item) => {
+            return (
+              <Tabs.Trigger value={item.label} key={item.label}>
+                <Link href={item.route}>{item.label}</Link>
+              </Tabs.Trigger>
+            );
+          })}
+        </Tabs.List>
+      </Tabs.Root>
       {/* <GlobalSearch />
 
       <div className="flex-between gap-5">

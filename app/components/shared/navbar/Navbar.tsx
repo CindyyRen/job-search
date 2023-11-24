@@ -4,39 +4,53 @@ import { SignedIn, UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import React from 'react';
 import { usePathname } from 'next/navigation';
-// import MobileNav from './MobileNav';
-// import GlobalSearch from '../search/GlobalSearch';
+import { Button, Tabs } from '@radix-ui/themes';
 
+// const Navbar = () => {
+//   const pathname = usePathname();
+//   return (
+//     <nav className="flex items-center p-4 justify-between">
+//       <div className="max-sm:hidden flex">
+//         {NavbarLinks.map((item) => {
+//           const isActive =
+//             (pathname.includes(item.route) && item.route.length > 1) ||
+//             pathname === item.route;
+//           return (
+//             <Link
+//               key={item.route}
+//               href={item.route}
+//               className={`text-gray-900 p-4 hover:'text-gray-700 '`}
+//             >
+//               <p
+//                 className={`hover:bg-slate-50 ${
+//                   isActive ? 'bg-slate-50' : 'text-gray-500'
+//                 } `}
+//               >
+//                 {item.label}
+//               </p>
+//             </Link>
+//           );
+//         })}
+//       </div>
+//       <UserButton afterSignOutUrl="/" />
+//     </nav>
+//   );
+// };
+// // hover:underline-on-active
+// export default Navbar;
 const Navbar = () => {
-  const pathname = usePathname();
   return (
-    <nav className="flex items-center p-4 justify-between">
-      {/* <Link href="/"></Link> */}
-      <div className="max-sm:hidden flex">
+    <Tabs.Root defaultValue="account">
+      <Tabs.List size="2">
         {NavbarLinks.map((item) => {
-          const isActive =
-            (pathname.includes(item.route) && item.route.length > 1) ||
-            pathname === item.route;
           return (
-            <Link
-              key={item.route}
-              href={item.route}
-              className={`text-gray-900 p-4 hover:'text-gray-700 '`}
-            >
-              <p
-                className={`hover:bg-slate-50 ${
-                  isActive ? 'bg-slate-50' : 'text-gray-500'
-                } `}
-              >
-                {item.label}
-              </p>
-            </Link>
+            <Tabs.Trigger value={item.label} key={item.label}>
+              <Link href={item.route} className=''>{item.label}</Link>
+            </Tabs.Trigger>
           );
         })}
-      </div>
-      <UserButton afterSignOutUrl="/" />
-    </nav>
+      </Tabs.List>
+    </Tabs.Root>
   );
 };
-// hover:underline-on-active
 export default Navbar;

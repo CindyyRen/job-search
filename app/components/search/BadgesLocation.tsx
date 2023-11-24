@@ -1,16 +1,16 @@
-import { BadgeLinks } from '@/constants';
+import { BadgeLocationLinks } from '@/constants';
 import { Badge } from '@radix-ui/themes';
 import Link from 'next/link';
 import React from 'react';
 import './style.css';
 
-const BadgesCareer = () => {
+const BadgesLocation = () => {
   return (
-    <div className="mt-8 mx-auto max-sm:hidden">
-      {BadgeLinks.map((item) => {
+    <div className="mt-3 mx-auto">
+      {BadgeLocationLinks.map((item) => {
         return (
           <Link key={item.route} href={item.route} className="m-1">
-            <Badge variant="soft" color="gray" className="button-pointer">
+            <Badge variant="soft" className="button-pointer">
               {item.label}
             </Badge>
           </Link>
@@ -20,4 +20,4 @@ const BadgesCareer = () => {
   );
 };
 
-export default BadgesCareer;
+export default BadgesLocation;

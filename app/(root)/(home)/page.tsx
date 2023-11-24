@@ -1,14 +1,15 @@
 import { UserButton } from '@clerk/nextjs';
 import GlobalSearch from '@/app/components/search/GlobalSearch';
 import BadgesCareer from '@/app/components/search/BadgesCareer';
+import BadgesLocation from '@/app/components/search/BadgesLocation';
 
 export default function Home() {
   return (
-    <div className="flex h-screen mt-12 ">
-      <div className="flex flex-col mt-12 items-center w-screen">
-        <div className="pb-11 mx-auto">
+    <div className="flex h-screen items-center mt-[-100px]">
+      <div className="flex flex-col items-center w-screen">
+        <div className="pb-11 mx-auto mx-sm:w-full">
           <span className="relative ml-[100px] text-white text-3xl font-bold w-24 h-24 bg-[var(--accent-8)] rounded-full flex justify-center items-center text-center p-5 shadow-xl">
-            <span className="absolute text-2xl font-bold right-[100px] top-[33px] text-slate-500">
+            <span className="absolute text-2xl font-light right-[100px] top-[33px] text-slate-500">
               Academic
             </span>
             Jobs
@@ -19,6 +20,7 @@ export default function Home() {
         </div>
         <GlobalSearch />
         <BadgesCareer />
+        <BadgesLocation />
       </div>
     </div>
   );

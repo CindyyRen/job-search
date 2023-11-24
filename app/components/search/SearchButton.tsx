@@ -4,7 +4,7 @@ import './style.css';
 
 export const SearchButton = () => {
   return (
-    <Button variant="solid" color="orange" className="button-pointer">
+    <Button variant="solid" className="button-pointer">
       Search
     </Button>
   );

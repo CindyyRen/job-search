@@ -34,9 +34,14 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         <Container>
-          {/* <Theme> */}
-          <Theme accentColor="orange">
-            {/* <Theme accentColor="blue"> */}
+          <Theme
+            appearance="light"
+            accentColor="orange"
+            grayColor="sand"
+            scaling="110%"
+          >
+            {/* <Theme appearance="light" accentColor="indigo" scaling="110%"> */}
+            {/* <Theme accentColor="green"> */}
             <ClerkProvider>{children}</ClerkProvider>
             {/* <ThemePanel /> */}
           </Theme>

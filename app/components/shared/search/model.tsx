@@ -1,149 +1,120 @@
 'use client';
-import * as Popover from '@radix-ui/react-popover';
-import { MixerHorizontalIcon, Cross2Icon } from '@radix-ui/react-icons';
+import { DatePosted, JobType, Location, WorkLocation } from '@/constants';
+import * as Dialog from '@radix-ui/react-dialog';
+import { MixerHorizontalIcon } from '@radix-ui/react-icons';
+import { useEffect } from 'react';
 import {
   Button,
-  Dialog,
-  DialogClose,
+  Checkbox,
   Flex,
-  Inset,
-  Table,
-  TableBody,
+  RadioGroup,
   TextField,
+  Text,
 } from '@radix-ui/themes';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
-const PopoverDemo = () => (
-  <div>
-    {/* <Popover.Root>
-      <Popover.Trigger asChild>
-        <Button variant="outline">
-          <MixerHorizontalIcon /> Filter
-        </Button>
-      </Popover.Trigger>
-      <Popover.Portal>
-        <Popover.Content
-          className="rounded p-5 mb-5 w-[360px] bg-white shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2),0_0_0_2px_theme(colors.violet7)] will-change-[transform,opacity] data-[state=open]:data-[side=top]:animate-slideDownAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade"
-          sideOffset={5}
-        >
-          <div className="flex flex-col gap-2.5">
-            <p className="text-mauve12 text-[15px] leading-[19px] font-medium mb-2.5">
-              Dimensions
-            </p>
-            <fieldset className="flex gap-5 items-center">
-              <label
-                className="text-[13px] text-violet11 w-[75px]"
-                htmlFor="width"
-              >
-                Width
-              </label>
-              <input
-                className="w-full inline-flex items-center justify-center flex-1 rounded px-2.5 text-[13px] leading-none text-violet11 shadow-[0_0_0_1px] shadow-violet7 h-[25px] focus:shadow-[0_0_0_2px] focus:shadow-violet8 outline-none"
-                id="width"
-                defaultValue="100%"
-              />
-            </fieldset>
-            <fieldset className="flex gap-5 items-center">
-              <label
-                className="text-[13px] text-violet11 w-[75px]"
-                htmlFor="maxWidth"
-              >
-                Max. width
-              </label>
-              <input
-                className="w-full inline-flex items-center justify-center flex-1 rounded px-2.5 text-[13px] leading-none text-violet11 shadow-[0_0_0_1px] shadow-violet7 h-[25px] focus:shadow-[0_0_0_2px] focus:shadow-violet8 outline-none"
-                id="maxWidth"
-                defaultValue="300px"
-              />
-            </fieldset>
-            <fieldset className="flex gap-5 items-center">
-              <label
-                className="text-[13px] text-violet11 w-[75px]"
-                htmlFor="height"
-              >
-                Height
-              </label>
-              <input
-                className="w-full inline-flex items-center justify-center flex-1 rounded px-2.5 text-[13px] leading-none text-violet11 shadow-[0_0_0_1px] shadow-violet7 h-[25px] focus:shadow-[0_0_0_2px] focus:shadow-violet8 outline-none"
-                id="height"
-                defaultValue="25px"
-              />
-            </fieldset>
-            <fieldset className="flex gap-5 items-center">
-              <label
-                className="text-[13px] text-violet11 w-[75px]"
-                htmlFor="maxHeight"
-              >
-                Max. height
-              </label>
-              <input
-                className="w-full inline-flex items-center justify-center flex-1 rounded px-2.5 text-[13px] leading-none text-violet11 shadow-[0_0_0_1px] shadow-violet7 h-[25px] focus:shadow-[0_0_0_2px] focus:shadow-violet8 outline-none"
-                id="maxHeight"
-                defaultValue="none"
-              />
-            </fieldset>
-          </div>
-          <Popover.Close
-            className="rounded-full h-[25px] w-[25px] inline-flex items-center justify-center text-violet11 absolute top-[5px] right-[5px] hover:bg-violet4 focus:shadow-[0_0_0_2px] focus:shadow-violet7 outline-none cursor-default"
-            aria-label="Close"
-          >
-            <Cross2Icon />
-          </Popover.Close>
-          <Popover.Arrow className="fill-white" />
-        </Popover.Content>
-      </Popover.Portal>
-    </Popover.Root> */}
+type Inputs = {
+  location: string;
+  LocationCheckbox: string[];
+};
 
+const Model = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  return (
     <Dialog.Root>
-      <Dialog.Trigger>
-        <Button variant="outline">
+      <Dialog.Trigger asChild>
+        <Button variant="outline" className="max-sm:w-full">
           <MixerHorizontalIcon /> Filter
         </Button>
       </Dialog.Trigger>
-      <Dialog.Content>
-        <Dialog.Title>Users</Dialog.Title>
-        <Dialog.Description>
-          The following users have access to this project.
-        </Dialog.Description>
+      <Dialog.Portal>
+        <Dialog.Overlay className="bg-blackA6 data-[state=open]:animate-overlayShow fixed inset-0" />
+        <Dialog.Content className="overflow-y-auto max-sm:text-xs data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[500px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
+          <Dialog.Title className="text-mauve12 m-0 text-xl font-bold text-center">
+            Filters
+          </Dialog.Title>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <label className="block mt-5 pb-3">
+              <span className="text-gray-700 pb-5 font-bold">
+                Select a location:
+              </span>
+            </label>
+            <select
+              {...register('location')}
+              className="block w-full mt-1  focus:ring-0 focus:border-gray-500 rounded"
+            >
+              {Location.map((item) => (
+                <option key={item.label} value={item.label}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
 
-        <Inset side="x" my="5">
-          <Table.Root>
-            <Table.Header>
-              <Table.Row>
-                <Table.ColumnHeaderCell>Full name</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Email</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>Group</Table.ColumnHeaderCell>
-              </Table.Row>
-            </Table.Header>
-
-            <TableBody>
-              <Table.Row>
-                <Table.RowHeaderCell>Danilo Sousa</Table.RowHeaderCell>
-                <Table.Cell>danilo@example.com</Table.Cell>
-                <Table.Cell>Developer</Table.Cell>
-              </Table.Row>
-
-              <Table.Row>
-                <Table.RowHeaderCell>Zahra Ambessa</Table.RowHeaderCell>
-                <Table.Cell>zahra@example.com</Table.Cell>
-                <Table.Cell>Admin</Table.Cell>
-              </Table.Row>
-            </TableBody>
-          </Table.Root>
-        </Inset>
-
-        <Flex gap="3" mt="4" justify="end">
-          <Dialog.Close>
-            <Button variant="soft" color="gray">
-              Cancel
-            </Button>
-          </Dialog.Close>
-          <Dialog.Close>
-            <Button>Save</Button>
-          </Dialog.Close>
-        </Flex>
-      </Dialog.Content>
+            <hr className="border-gray-200 my-4"></hr>
+            <fieldset>
+              <legend className="pb-2 font-bold">Work Location</legend>
+              <label className="grid grid-cols-2 gap-4  pb-2">
+                <Controller
+                  name="LocationCheckbox"
+                  control={control}
+                  defaultValue={[]}
+                  render={({ field }) => (
+                    <>
+                      {WorkLocation.map((option, index) => (
+                        <div key={index}>
+                          <input
+                            type="checkbox"
+                            value={option.label}
+                            className="text-gray-600 rounded focus:ring-0"
+                            onChange={(e) => {
+                              const updatedValue = e.target.checked
+                                ? [...field.value, e.target.value]
+                                : field.value.filter(
+                                    (val) => val !== e.target.value
+                                  );
+                              field.onChange(updatedValue);
+                            }}
+                            checked={field.value.includes(option.label)}
+                          />
+                          <label className="inline-flex items-center outline-none pl-2 ">
+                            {option.label}
+                          </label>
+                        </div>
+                      ))}
+                    </>
+                  )}
+                />
+              </label>
+            </fieldset>
+            <hr className="border-gray-200 my-4"></hr>
+            <div className="grid grid-cols-2">
+              <button
+                type="submit"
+                className="bg-gray-200 hover:bg-gray-100 text-gray-500 font-bold py-2 px-4 rounded"
+                onClick={() => reset()}
+              >
+                Clear
+              </button>
+              <button
+                type="submit"
+                className="bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+        </Dialog.Content>
+      </Dialog.Portal>
     </Dialog.Root>
-  </div>
-);
+  );
+};
 
-export default PopoverDemo;
+export default Model;
