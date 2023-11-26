@@ -10,8 +10,10 @@ import {
   RadioGroup,
   TextField,
   Text,
+  Select,
 } from '@radix-ui/themes';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import './style.css';
 
 type Inputs = {
   location: string;
@@ -32,9 +34,13 @@ const Model = () => {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <Button variant="outline" className="max-sm:w-full">
-          <MixerHorizontalIcon /> Filter
-        </Button>
+        <button
+          className="max-sm:w-full flex justify-center items-center mr-1  max-sm:mb-1  border-orange-500 border  text-orange-500 hover:text-orange-900 text-sm py-1 px-2 rounded"
+          type="button"
+          style={{ height: '34px' }}
+        >
+          <MixerHorizontalIcon className="w-5 h-5 mr-1" /> Filter
+        </button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="bg-blackA6 data-[state=open]:animate-overlayShow fixed inset-0" />
@@ -42,23 +48,34 @@ const Model = () => {
           <Dialog.Title className="text-mauve12 m-0 text-xl font-bold text-center">
             Filters
           </Dialog.Title>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <label className="block mt-5 pb-3">
-              <span className="text-gray-700 pb-5 font-bold">
-                Select a location:
-              </span>
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+            <hr className="border-gray-200 my-4"></hr>
+            <label className="py-2 font-bold">
+              <p>Select a Location</p>
             </label>
-            <select
-              {...register('location')}
-              className="block w-full mt-1  focus:ring-0 focus:border-gray-500 rounded"
-            >
-              {Location.map((item) => (
-                <option key={item.label} value={item.label}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
-
+            <br />
+            <div className="w-full flex justify-center">
+              <Controller
+                name="location"
+                control={control}
+                render={({ field }) => (
+                  <Select.Root {...field} defaultValue="Global">
+                    <Select.Trigger color="gray" variant="soft" />
+                    <Select.Content color="gray" className="w-[250px]">
+                      {Location.map((item) => (
+                        <Select.Item
+                          key={item.label}
+                          value={item.label}
+                          className=" hover:bg-gray-300 active:accent-slate-300 "
+                        >
+                          {item.label}
+                        </Select.Item>
+                      ))}
+                    </Select.Content>
+                  </Select.Root>
+                )}
+              />
+            </div>
             <hr className="border-gray-200 my-4"></hr>
             <fieldset>
               <legend className="pb-2 font-bold">Work Location</legend>

@@ -1,0 +1,5 @@
+.full-width-select {
+  width: 100%;
+  max-width: 100%;
+  min-width: 200px; /* Adjust the minimum width as needed */
+}

@@ -33,19 +33,21 @@ export default function RootLayout({
         className={`${inter.variable} ${spaceGrotesk.variable}`}
         suppressHydrationWarning={true}
       >
-        <Container>
-          <Theme
-            appearance="light"
-            accentColor="orange"
-            grayColor="sand"
-            scaling="110%"
-          >
-            {/* <Theme appearance="light" accentColor="indigo" scaling="110%"> */}
-            {/* <Theme accentColor="green"> */}
-            <ClerkProvider>{children}</ClerkProvider>
-            {/* <ThemePanel /> */}
-          </Theme>
-        </Container>
+        {/* <Container> */}
+
+        <Theme
+          appearance="light"
+          accentColor="orange"
+          grayColor="sand"
+          scaling="110%"
+        >
+          {/* <Theme appearance="light" accentColor="indigo" scaling="110%"> */}
+          {/* <Theme accentColor="green"> */}
+          <ClerkProvider>{children}</ClerkProvider>
+          {/* <ThemePanel /> */}
+        </Theme>
+
+        {/* </Container> */}
       </body>
     </html>
   );
