@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable}`}
+        className={`overflow-y-hidden ${inter.variable} ${spaceGrotesk.variable}`}
         suppressHydrationWarning={true}
       >
         {/* <Container> */}

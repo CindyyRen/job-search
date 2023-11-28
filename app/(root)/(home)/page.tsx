@@ -2,6 +2,19 @@ import { UserButton } from '@clerk/nextjs';
 import GlobalSearch from '@/app/components/search/GlobalSearch';
 import BadgesCareer from '@/app/components/search/BadgesCareer';
 import BadgesLocation from '@/app/components/search/BadgesLocation';
+export const metadata = {
+  title:
+    'Academic Jobs - The Number 1 job board for Higher Ed jobs, Top University Recruitment & College Jobs.',
+  description:
+    'Discover academic jobs at all universities today! Explore your next academic positions through visiting our higher ed jobs, with new academic jobs added daily.',
+  keywords: [
+    'Academic Jobs',
+    'Higher Ed Jobs',
+    'Academic positions',
+    'University Jobs',
+    'College Jobs',
+  ],
+};
 
 export default function Home() {
   return (

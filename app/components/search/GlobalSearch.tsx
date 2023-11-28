@@ -1,30 +1,50 @@
 'use client';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Model from '@/app/components/shared/search/model';
-import {
-  DotsHorizontalIcon,
-  MagnifyingGlassIcon,
-  OpacityIcon,
-} from '@radix-ui/react-icons';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { Flex, IconButton, TextField } from '@radix-ui/themes';
+import { DotsHorizontalIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { IconButton, TextField } from '@radix-ui/themes';
 import { CiLocationOn } from 'react-icons/ci';
+import { fetchLocation1 } from '@/lib/utils';
 const GlobalSearch = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const keywordRef = useRef<HTMLInputElement>(null);
+  const locationRef = useRef<HTMLInputElement>(null);
+  // const a = { q: '', l: '' };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          'https://api.geoapify.com/v1/ipinfo?apiKey=ea0e191c22a94bf39e0e58ffbe2d6b66'
+        );
+        const result = await response.json();
+        if (locationRef.current) {
+          const params = new URLSearchParams(searchParams);
+          locationRef.current.value = result.country.name;
+          params.set('query', locationRef.current.value);
+        }
+      } catch (error) {
+        console.error('Error fetching Location:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleSearch = () => {
     const params = new URLSearchParams(searchParams);
-    if (inputRef.current) {
-      const searchValue = inputRef.current.value;
-      console.log('Search Value:', searchValue);
-      if (searchValue) {
-        params.set('query', searchValue);
+    if (keywordRef.current) {
+      const keywordValue = keywordRef.current.value;
+      // console.log('Search Value:', searchValue);
+      if (keywordValue) {
+        // a.q = searchValue;
+        params.set('query', keywordValue);
       } else {
         params.delete('query');
       }
-      router.push(`/find-jobs?search=${searchValue}`);
+      const queryString = params.toString();
+      router.push(`/find-jobs`);
     }
   };
   return (
@@ -43,6 +63,9 @@ const GlobalSearch = () => {
                   <MagnifyingGlassIcon height="16" width="16" />
                 </TextField.Slot>
                 <TextField.Input
+                  name="keywords"
+                  // value={keyword}
+                  ref={keywordRef}
                   placeholder="Enter key words"
                   className="w-full focus:ring-0 focus:border-none"
                 />
@@ -62,6 +85,9 @@ const GlobalSearch = () => {
                   <CiLocationOn height="16" width="16" />
                 </TextField.Slot>
                 <TextField.Input
+                  name="location"
+                  // value={location}
+                  ref={locationRef}
                   placeholder="Where"
                   className="w-full focus:ring-0 focus:border-none"
                 />

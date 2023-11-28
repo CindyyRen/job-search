@@ -128,3 +128,15 @@ export const WorkLocation = [
   { label: 'Part time' },
   { label: 'Casual' },
 ];
+
+
+// AUSTRALIA
+// ASIA
+//  CANADA
+// EUROPE
+// INDIA
+// SOUTH AMERICA
+// MIDDLE EAST
+// NEW ZEALAND
+// UNITED KINGDOM
+// USA
